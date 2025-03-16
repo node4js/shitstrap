@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+using System.Printing;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Shell;
@@ -14,15 +15,15 @@ namespace Bloxstrap
     public partial class App : Application
     {
 #if QA_BUILD
-        public const string ProjectName = "Bloxstrap-QA";
+        public const string ProjectName = "Shitstrap-QA";
 #else
-        public const string ProjectName = "Bloxstrap";
+        public const string ProjectName = "Shitstrap";
 #endif
-        public const string ProjectOwner = "Bloxstrap";
-        public const string ProjectRepository = "bloxstraplabs/bloxstrap";
-        public const string ProjectDownloadLink = "https://bloxstraplabs.com";
-        public const string ProjectHelpLink = "https://github.com/bloxstraplabs/bloxstrap/wiki";
-        public const string ProjectSupportLink = "https://github.com/bloxstraplabs/bloxstrap/issues/new";
+        public const string ProjectOwner = "node4js";
+        public const string ProjectRepository = "node4js/shitstrap";
+        public const string ProjectDownloadLink = "";
+        public const string ProjectHelpLink = "";
+        public const string ProjectSupportLink = "";
 
         public const string RobloxPlayerAppName = "RobloxPlayerBeta";
         public const string RobloxStudioAppName = "RobloxStudioBeta";
@@ -157,11 +158,11 @@ namespace Bloxstrap
 
             try
             {
-                await HttpClient.GetAsync($"https://bloxstraplabs.com/metrics/post?key={key}&value={value}");
+
             }
             catch (Exception ex)
             {
-                Logger.WriteException("App::SendStat", ex);
+
             }
         }
 
@@ -172,14 +173,11 @@ namespace Bloxstrap
 
             try
             {
-                await HttpClient.PostAsync(
-                    $"https://bloxstraplabs.com/metrics/post-exception", 
-                    new StringContent(Logger.AsDocument)
-                );
+
             }
             catch (Exception ex)
             {
-                Logger.WriteException("App::SendLog", ex);
+
             }
         }
 
@@ -192,7 +190,10 @@ namespace Bloxstrap
             {
                 Logger.WriteLine(LOG_IDENT, $"Detected unsupported Windows version ({Environment.OSVersion.Version}).");
 
-                if (!LaunchSettings.QuietFlag.Active)
+                if (LaunchSettings.QuietFlag.Active)
+                {
+                }
+                else
                     Frontend.ShowMessageBox(Strings.App_OSDeprecation_Win7_81, MessageBoxImage.Error);
 
                 Terminate(ErrorCode.ERROR_INVALID_FUNCTION);
@@ -241,8 +242,6 @@ namespace Bloxstrap
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
-            HttpClient.Timeout = TimeSpan.FromSeconds(30);
-            HttpClient.DefaultRequestHeaders.Add("User-Agent", userAgent);
 
             LaunchSettings = new LaunchSettings(e.Args);
 
